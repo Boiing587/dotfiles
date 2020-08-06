@@ -1,0 +1,97 @@
+#!/bin/bash
+# vim: set foldmethod=marker foldlevel=0 nomodeline:
+bspc rule -r "*"
+
+# Loop through all monitors and change name
+#i=1
+#for monitor in $(bspc query -M); do
+#  bspc monitor "${monitor}" --rename "${i}"
+#  let i++
+#done
+
+# General config {{{
+#bspc config split_ratio 0.52
+#bspc config borderless_monocle true
+#bspc config gapless_monocle true
+bspc config automatic_scheme alternate
+bspc config initial_polarity second_child
+bspc config pointer_modifier mod4
+bspc config pointer_action1 move
+bspc config pointer_action2 resize_side
+bspc config pointer_action3 resuze_corner
+bspc config click_to_focus any
+
+bspc config focus_follows_pointer true
+bspc config remove_disabled_monitors true
+bspc config remove_unplugged_monitors true
+bspc config merge_overlapping_monitors true
+
+bspc config normal_border_color "#2e2e2e"
+bspc config active_border_color "#2e2e2e"
+bspc config focused_border_color "#306998"
+bspc config presel_feedback_color "#5e81ac"
+bspc config urgent_border_color "#dd2727"
+
+#bspc config top_padding 24
+bspc config top_padding 0
+bspc config bottom_padding 0
+bspc config left_padding 0
+bspc config right_padding 0
+bspc config border_width 3
+bspc config window_gap 10
+
+xsetroot -cursor_name left_ptr
+
+which external_rules >/dev/null 2>&1 \
+  && bspc config external_rules_command "$(which external_rules)" \
+  || bspc config external_rules_command "${HOME}/.config/bspwm/extrules"
+# }}}
+
+# Scratchpad {{{
+# https://www.reddit.com/r/bspwm/comments/85hr4c/making_a_scratchpaddropdown_terminal_in_bspwm/
+#dropdownname="dropdown"
+#bspc query -N -n .hidden >/dev/null || setsid $TERMINAL -n "$dropdownname" -e dropdown >/dev/null 2>&1 &
+#bspc rule -a St:$dropdownname hidden=on
+#bspc rule -a St:$dropdownname sticky=on
+#bspc rule -a St:$dropdownname state=floating
+
+#bspc config external_rules_command "$(which floaters)"
+# }}}
+
+# Rules {{{
+bspc rule -a discord desktop=^2
+bspc rule -a Mattermost desktop=^3
+bspc rule -a slack desktop=^2
+bspc rule -a Steam desktop=^5
+bspc rule -a org.remmina.Remmina desktop=^5
+bspc rule -a Screenkey manage=off
+bspc rule -a Pavucontrol floating=on
+bspc rule -a mpv floating=on
+bspc rule -a keepass2 floating=on
+bspc rule -a '*:scratchpad' sticky=on state=floating center=true rectangle=1600x1000+0+0
+# }}}
+
+exec_once () { # {{{
+  # Note: Most programs are started in .xprofile
+  cmd="${1}" # $1: command to run
+  pid="${2:-${cmd%% *}}" # $2: what to check the pid of, defaults to first word of $1
+  if ! pgrep -f "${pid}" >/dev/null 2>&1; then
+    if command -v "${cmd}" >/dev/null 2>&1; then
+      eval "${cmd} &"
+    fi
+  fi
+}
+#exec_once "discord"
+
+# Move to top?
+command -v "polybar-start" \
+  && polybar-start \
+  || "${HOME}"/.local/bin/polybar-start
+command -v "cleanfullscreen" \
+  && cleanfullscreen \
+  || "${HOME}/.local/bin/cleanfullscreen"
+"${HOME}"/.config/bspwm/monitors.py &
+feh --bg-scale "${HOME}/.config/wall.png" &
+pkill -USR1 picom
+killall -q sxhkd; sxhkd -m 1 -c "${HOME}/.config/sxhkd/sxhkdrc" "${HOME}/.config/bspwm/sxhkdrc" &
+# }}}

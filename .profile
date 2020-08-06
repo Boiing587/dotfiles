@@ -9,7 +9,7 @@ export PATH="${PATH}:${HOME}/.local/bin"
 export LANG="en_US.UTF-8"
 export LC_ALL="${LANG}"
 #
-export EDITOR='vim'
+export EDITOR='nvim'
 export VISUAL="${EDITOR}"
 export FILE="${EDITOR}"
 export TERMINAL="alacritty"

@@ -1,0 +1,37 @@
+# vim: set foldmethod=marker foldlevel=0 nomodeline:
+# description: Launch terminal.
+super + Return
+	"$TERMINAL"
+
+super + x
+	gllock || lock || i3lock-fancy || i3lock
+
+super + shift + x
+	prompt "Are you sure you want to shutdown?" "shutdown -h now"
+
+super + d
+	rofi -show run
+super + shift + d
+	rofi -combi-modi window,drun -show combi -modi combi
+
+super + alt + e
+	emoji
+
+super + Escape
+	pkill -USR1 -x sxhkd
+
+alt + p
+	sharenix-section -n -c
+
+super + alt + c
+	roficmds
+
+super + shift + c
+	toggleprogram "compton" "-b"
+
+super + shift + v
+	whim --editor "$EDITOR +startinsert" --terminal "$TERMINAL --class scratchpad -e"
+
+super + o ; {v,w}
+	{"$TERMINAL" -e "$EDITOR", \
+	 "$BROWSER"}

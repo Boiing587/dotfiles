@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+dependencies=("xdo" "xprop" "awk")
+for cmd in "${dependencies[@]}"; do
+  if ! command -v "${cmd}" >/dev/null 2>&1; then
+    printf "Command ${cmd} not found.\n"
+    notify-send "Scratchpad" "Command ${cmd} not found."
+    missingDependencies='true'
+  fi
+done
+test -n "${missingDependencies}" && exit 1
+
+id="$(xdo id -n scratchpad)"
+if test -z "${id}"; then
+  ${TERMINAL} --class scratchpad --title scratchpad
+else
+  action='hide'
+  if test "$(xprop -id ${id} | awk '/window state: / {print $3}')" = 'Withdrawn'; then
+    action='show'
+  fi
+  xdo "${action}" -n scratchpad
+fi
