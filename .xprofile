@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 #setxkbmap -option caps:escape -v no
-#pulseaudio --start &
+pulseaudio --start &
 #pulseaudio --log-level=4 --log-target=stderr &
 #pulseeffects --gapplication-service &
 sxhkd -m 1 &
@@ -11,7 +11,7 @@ nm-applet &
 picom -fcCGb --xrender-sync-fence &
 feh --bg-scale "${HOME}/.config/wall.png" &
 #xrdb ${XDG_CONFIG_HOME:-$HOME/.config}/Xresources &
-systemctl --user import-environment DISPLAY
+#systemctl --user import-environment DISPLAY
 "${HOME}"/.local/bin/polybar-start
 
 #xsetwacom --set "Wacom Intuos S Pen stylus" Suppress 2

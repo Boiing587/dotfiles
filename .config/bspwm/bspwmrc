@@ -95,3 +95,4 @@ feh --bg-scale "${HOME}/.config/wall.png" &
 pkill -USR1 picom
 killall -q sxhkd; sxhkd -m 1 -c "${HOME}/.config/sxhkd/sxhkdrc" "${HOME}/.config/bspwm/sxhkdrc" &
 # }}}
+
