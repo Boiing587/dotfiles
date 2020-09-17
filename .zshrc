@@ -157,9 +157,13 @@ alias grep='grep --color'
 alias c='xclip -selection clipboard'
 alias please='sudo $(fc -ln -1)'
 alias back='cd ${OLDPWD}'
-alias reload='source "${HOME}/.config/zsh/.zshrc"'
+alias reload='source "${HOME}/.zshrc"'
 alias lineinon='pactl load-module module-loopback latency_msec=1'
 alias whim='whim --editor "${EDITOR} +startinsert" --terminal "${TERMINAL} --class scratchpad -e"'
+alias calc="rofi -show calc -modi calc -no-show-match -no-sort"
+alias scrshtreg='xfce4-screenshooter -r -s /home/thomas/Pictures/Screenshots/${date +"%d.%m.%y-%H:%M:%S"}.png'
+alias scrshtwin='xfce4-screenshooter -w -d 2 -s /home/thomas/Pictures/Screenshots/${date +"%d.%m.%y-%H:%M:%S"}.png'
+alias fixmonitors='${HOME}/.config/dotfiles/monitors.sh && bspc wm --restart'
 dkhl () { docker inspect --format "{{json .State.Health }}" "${1}" | jq }
 wim () { ${EDITOR} "$(which ${1})" "${@:2}" }
 #alias tmux='tmux -f "${XDG_CONFIG_HOME:-${HOME}/.config}/tmux/tmux.conf"'

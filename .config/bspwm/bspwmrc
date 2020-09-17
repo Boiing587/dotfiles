@@ -41,6 +41,7 @@ bspc config border_width 3
 bspc config window_gap 10
 
 xsetroot -cursor_name left_ptr
+xcursor.size: 8
 
 which external_rules >/dev/null 2>&1 \
   && bspc config external_rules_command "$(which external_rules)" \
@@ -60,10 +61,10 @@ which external_rules >/dev/null 2>&1 \
 
 # Rules {{{
 bspc rule -a discord desktop=^2
-bspc rule -a Mattermost desktop=^3
+bspc rule -a Mattermost desktop=^1
 bspc rule -a slack desktop=^2
 bspc rule -a Steam desktop=^5
-bspc rule -a org.remmina.Remmina desktop=^5
+bspc rule -a Remmina desktop=^5
 bspc rule -a Screenkey manage=off
 bspc rule -a Pavucontrol floating=on
 bspc rule -a mpv floating=on
